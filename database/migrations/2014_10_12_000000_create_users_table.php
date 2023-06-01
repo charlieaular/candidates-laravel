@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Src\Shared\Domain\ValueObject\Role;
+use Src\Shared\Domain\ValueObjects\Role;
 
 return new class extends Migration {
     /**

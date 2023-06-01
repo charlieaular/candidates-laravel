@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Src\Lead\Infrastructure\Controllers\GetLeadsByOwnerControllers;
 use Src\Lead\Infrastructure\Controllers\GetLeadsControllers;
-use Src\Shared\Domain\ValueObject\Role;
+use Src\Shared\Domain\ValueObjects\Role;
 
 class GetLeadsController extends Controller {
 
