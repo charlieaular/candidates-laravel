@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Src\Auth\Infrastructure;
+namespace Src\Auth\Infrastructure\Controllers;
 
 use Illuminate\Http\Request;
 use Src\Auth\Application\LoginUseCase;
@@ -16,9 +16,7 @@ final class LoginController {
     $this->repository = $repository;
   }
 
-  public function __invoke(Request $request) {
-    $username = $request->input("username");
-    $password = $request->input("password");
+  public function __invoke(string $username, string $password) {
 
     $loginUseCase = new LoginUseCase($this->repository);
     $token = $loginUseCase->__invoke($username, $password);

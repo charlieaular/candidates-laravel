@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Responses\ErrorResponse;
 use App\Responses\SuccessResponse;
 use Illuminate\Http\Request;
-use Src\Auth\Infrastructure\LoginController;
+use Src\Auth\Infrastructure\Controllers\LoginController;
 
 class AuthController extends Controller {
 
@@ -17,12 +17,15 @@ class AuthController extends Controller {
   }
 
   public function __invoke(Request $request) {
-      $token = $this->loginController->__invoke($request);
-      $data = [
-        "token" => $token,
-        "minutes_to_expire" => env("JWT_TTL")
-      ];
+    $username = $request->input("username");
+    $password = $request->input("password");
 
-      return new SuccessResponse($data);
+    $token = $this->loginController->__invoke($username, $password);
+    $data = [
+      "token" => $token,
+      "minutes_to_expire" => env("JWT_TTL")
+    ];
+
+    return new SuccessResponse($data);
   }
 }
