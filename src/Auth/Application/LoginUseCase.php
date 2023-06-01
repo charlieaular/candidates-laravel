@@ -21,7 +21,7 @@ final class LoginUseCase {
 
     $token = $this->repository->login($userNameVO, $passwordVO);
 
-    if (!$token) throw new WrongPasswordException($userNameVO->value());
+    if (!$token) throw new WrongPasswordException($userNameVO);
 
 
     return $token;

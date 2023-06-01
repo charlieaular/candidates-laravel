@@ -20,7 +20,7 @@ final class LeadRepository implements LeadRepositoryContract {
   }
 
   public function getAllLeadsByOwner(OwnerId $ownerId) {
-    return $this->eloquentCandidateModel->where("owner", $ownerId->value())->get()->toArray();
+    return $this->eloquentCandidateModel->where("owner", $ownerId)->get()->toArray();
   }
 
   public function getAllLeadById(LeadId $leadId) {

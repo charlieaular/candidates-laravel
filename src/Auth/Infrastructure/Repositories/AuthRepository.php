@@ -18,7 +18,7 @@ final class AuthRepository implements AuthRepositoryContract {
 
   public function login(UserName $name, Password $password) {
 
-    $token = Auth::attempt(["username" => $name->value(), "password" => $password->value()]);
+    $token = Auth::attempt(["username" => $name, "password" => $password]);
     return $token;
 
   }
