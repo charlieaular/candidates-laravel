@@ -1,0 +1,15 @@
+<?php
+
+namespace Src\Auth\Domain\ValueObjects;
+
+final class Password {
+  private $value;
+
+  public function __construct(string $name) {
+    $this->value = $name;
+  }
+
+  public function value(): string {
+    return $this->value;
+  }
+}

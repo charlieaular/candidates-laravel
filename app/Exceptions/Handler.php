@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Responses\ErrorResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Src\Auth\Domain\Exceptions\WrongPasswordException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -22,7 +25,8 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
-        //
+        WrongPasswordException::class
+
     ];
 
     /**
@@ -46,5 +50,13 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if (method_exists($exception, 'render')) {
+            return $exception->render();
+        }
+        return new ErrorResponse([$exception->getMessage()]);
     }
 }

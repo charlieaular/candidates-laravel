@@ -18,4 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("auth", "AuthController@auth");
+require_once __DIR__.'/auth/auth.php';
