@@ -25,6 +25,5 @@ final class LoginUseCase {
 
 
     return $token;
-
   }
 }

@@ -2,7 +2,9 @@
 
 namespace Src\Lead\Domain\ValueObjects;
 
-final class LeadId {
+use Stringable;
+
+final class LeadId implements Stringable {
   private $value;
 
   public function __construct(int $leadId) {

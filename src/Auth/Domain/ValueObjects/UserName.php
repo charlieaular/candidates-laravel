@@ -2,7 +2,9 @@
 
 namespace Src\Auth\Domain\ValueObjects;
 
-final class UserName {
+use Stringable;
+
+final class UserName implements Stringable {
   private $value;
 
   public function __construct(string $name) {

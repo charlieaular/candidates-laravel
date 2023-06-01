@@ -2,7 +2,9 @@
 
 namespace Src\Lead\Domain\ValueObjects;
 
-final class OwnerId {
+use Stringable;
+
+final class OwnerId implements Stringable {
   private $value;
 
   public function __construct(int $ownerId) {
@@ -10,6 +12,10 @@ final class OwnerId {
   }
 
   public function value(): int {
+    return $this->value;
+  }
+
+  public function __toString() {
     return $this->value;
   }
 }
