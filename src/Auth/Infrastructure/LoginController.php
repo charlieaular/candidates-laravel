@@ -17,8 +17,8 @@ final class LoginController {
   }
 
   public function __invoke(Request $request) {
-    $username = "kade15s";
-    $password = "123456";
+    $username = $request->input("username");
+    $password = $request->input("password");
 
     $loginUseCase = new LoginUseCase($this->repository);
     $token = $loginUseCase->__invoke($username, $password);
