@@ -22,7 +22,7 @@ class LeadTest extends TestCase {
     $this->leadApi = "/api/lead";
   }
 
-  public function testShoduldRetriveAllCandidatesWhenCurrentUserIsManager() {
+  public function testShouldRetriveAllCandidatesWhenCurrentUserIsManager() {
     $users = User::factory()->count(2)->create([
       "role" => Role::Manager
     ]);
@@ -56,7 +56,7 @@ class LeadTest extends TestCase {
     $this->assertCount($candidateCount, $data);
   }
 
-  public function testShoduldRetriveOwnerCandidatesWhenCurrentUserIsAgent() {
+  public function testShouldRetriveOwnerCandidatesWhenCurrentUserIsAgent() {
     $users = User::factory()->count(2)->create([
       "role" => Role::Agent
     ]);
@@ -90,7 +90,7 @@ class LeadTest extends TestCase {
     $this->assertCount($candidateCount, $data);
   }
 
-  public function testShoduldRetriveOneCandidate() {
+  public function testShouldRetriveOneCandidate() {
     $candidates = Candidate::factory()->count(10)->create();
 
     $randomCandidate = $candidates->random();
@@ -108,7 +108,7 @@ class LeadTest extends TestCase {
       ]);
   }
 
-  public function testShoduldThrowErrorWhenCandidateDoesNotExists() {
+  public function testShouldThrowErrorWhenCandidateDoesNotExists() {
     Candidate::factory()->count(10)->create();
 
     $response = $this->getJson($this->leadApi . "/" . "99999999999");
@@ -119,6 +119,95 @@ class LeadTest extends TestCase {
         "meta" => [
           "success" => false,
           "errors" => ["No lead found"]
+        ],
+      ]);
+  }
+
+  public function testShouldCreateALead() {
+
+    $user = User::factory()->create([
+      "role" => Role::Manager
+    ]);
+
+    $randomUser = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $body = [
+      "name" => "TestName",
+      "source" => "TestSource",
+      "owner" => $randomUser->id,
+    ];
+
+    $response = $this->postJson($this->leadApi, $body);
+
+    $response
+      ->assertStatus(201)
+      ->assertJsonStructure([
+        "meta" => [
+          "success",
+          "errors"
+        ],
+        "data" => [
+          "name",
+          "source",
+          "owner",
+          "created_by",
+          "created_at",
+          "id",
+        ]
+      ]);
+  }
+  public function testShouldThrowErrorWhenMissingField() {
+
+    $user = User::factory()->create([
+      "role" => Role::Manager
+    ]);
+
+    $randomUser = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $body = [
+      "source" => "TestSource",
+      "owner" => $randomUser->id,
+    ];
+
+    $response = $this->postJson($this->leadApi, $body);
+
+    $response
+      ->assertStatus(422)
+      ->assertJsonStructure([
+        "meta" => [
+          "success",
+          "errors"
+        ],
+      ]);
+  }
+
+  public function testShouldThrowErrorWhenCreateCandidateWhenRoleIsNotManager() {
+    $user = User::factory()->create([
+      "role" => Role::Agent
+    ]);
+
+    $randomUser = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $body = [
+      "name" => "TestName",
+      "source" => "TestSource",
+      "owner" => $randomUser->id,
+    ];
+
+    $response = $this->postJson($this->leadApi, $body);
+
+    $response
+      ->assertStatus(401)
+      ->assertExactJson([
+        "meta" => [
+          "success" => false,
+          "errors" => ["This action is unauthorized."]
         ],
       ]);
   }

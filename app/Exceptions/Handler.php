@@ -3,8 +3,11 @@
 namespace App\Exceptions;
 
 use App\Responses\ErrorResponse;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -55,6 +58,17 @@ class Handler extends ExceptionHandler
         if (method_exists($exception, 'render')) {
             return $exception->render();
         }
-        return new ErrorResponse([$exception->getMessage()]);
+
+        $httpStatusCode = $this->getHttpStatusCodeFromException($exception);
+
+        return new ErrorResponse([$exception->getMessage()], $httpStatusCode);
+    }
+
+    private function getHttpStatusCodeFromException(Throwable $th)    {
+        return match(true) {
+            $th instanceof AuthorizationException => Response::HTTP_UNAUTHORIZED,
+            $th instanceof ValidationException => Response::HTTP_UNPROCESSABLE_ENTITY,
+            default => Response::HTTP_INTERNAL_SERVER_ERROR
+        };
     }
 }

@@ -89,6 +89,6 @@ class AuthTest extends TestCase {
           "success" => false,
           "errors" => ["Password incorrect for user: {$user->username}"]
         ],
-      ]);;
+      ]);
   }
 }
