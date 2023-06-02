@@ -23,7 +23,6 @@ class AuthTest extends TestCase {
       "is_active" => true,
     ]);
 
-
     $credentials = [
       "username" => $user->username,
       "password" => "123456",
@@ -54,7 +53,6 @@ class AuthTest extends TestCase {
       "is_active" => false,
     ]);
 
-
     $credentials = [
       "username" => $user->username,
       "password" => "123456",
@@ -76,7 +74,6 @@ class AuthTest extends TestCase {
     $user = User::factory()->create([
       "is_active" => true,
     ]);
-
 
     $credentials = [
       "username" => $user->username,
