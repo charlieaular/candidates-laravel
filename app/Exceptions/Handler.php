@@ -5,7 +5,6 @@ namespace App\Exceptions;
 use App\Responses\ErrorResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
-use Src\Auth\Domain\Exceptions\WrongPasswordException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -25,7 +24,6 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
-        WrongPasswordException::class
 
     ];
 

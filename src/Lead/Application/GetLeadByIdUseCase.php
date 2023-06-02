@@ -3,6 +3,7 @@
 namespace Src\Lead\Application;
 
 use Src\Lead\Domain\Contracts\LeadRepositoryContract;
+use Src\Lead\Domain\Exceptions\LeadNotFoundException;
 use Src\Lead\Domain\ValueObjects\LeadId;
 
 final class GetLeadByIdUseCase {
@@ -14,6 +15,8 @@ final class GetLeadByIdUseCase {
   }
 
   public function __invoke(LeadId $leadId) {
-    return $this->repository->getAllLeadById($leadId);
+    $lead = $this->repository->getAllLeadById($leadId);
+    if ($lead == null) throw new LeadNotFoundException();
+    return $lead;
   }
 }

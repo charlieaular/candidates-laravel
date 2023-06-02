@@ -24,6 +24,6 @@ final class LeadRepository implements LeadRepositoryContract {
   }
 
   public function getAllLeadById(LeadId $leadId) {
-    return $this->eloquentCandidateModel->find($leadId)->toArray();
+    return $this->eloquentCandidateModel->find($leadId)?->toArray();
   }
 }
