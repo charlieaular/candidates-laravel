@@ -1,14 +1,14 @@
 <?php
 
-namespace Src\Auth\Domain\ValueObjects;
+namespace Src\Lead\Domain\ValueObjects;
 
 use Src\Shared\Domain\ValueObjects\ValueObject;
 
-final class Password extends ValueObject {
+final class LeadName extends ValueObject {
   private $value;
 
-  public function __construct(string $name) {
-    $this->value = $name;
+  public function __construct(string $leadName) {
+    $this->value = $leadName;
   }
 
   public function value(): string {
@@ -22,4 +22,5 @@ final class Password extends ValueObject {
   public function jsonSerialize(): string {
     return $this->value;
   }
+  
 }

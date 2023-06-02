@@ -2,9 +2,9 @@
 
 namespace Src\Auth\Domain\ValueObjects;
 
-use Stringable;
+use Src\Shared\Domain\ValueObjects\ValueObject;
 
-final class UserName implements Stringable {
+final class UserName extends ValueObject {
   private $value;
 
   public function __construct(string $name) {
@@ -16,6 +16,10 @@ final class UserName implements Stringable {
   }
 
   public function __toString() {
+    return $this->value;
+  }
+
+  public function jsonSerialize(): string {
     return $this->value;
   }
 }

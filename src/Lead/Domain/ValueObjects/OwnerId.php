@@ -2,9 +2,9 @@
 
 namespace Src\Lead\Domain\ValueObjects;
 
-use Stringable;
+use Src\Shared\Domain\ValueObjects\ValueObject;
 
-final class OwnerId implements Stringable {
+final class OwnerId extends ValueObject {
   private $value;
 
   public function __construct(int $ownerId) {
@@ -16,6 +16,10 @@ final class OwnerId implements Stringable {
   }
 
   public function __toString() {
+    return $this->value;
+  }
+
+  public function jsonSerialize(): string {
     return $this->value;
   }
 }

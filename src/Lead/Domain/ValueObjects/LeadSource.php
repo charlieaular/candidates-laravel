@@ -1,17 +1,17 @@
 <?php
 
-namespace Src\Auth\Domain\ValueObjects;
+namespace Src\Lead\Domain\ValueObjects;
 
 use Src\Shared\Domain\ValueObjects\ValueObject;
 
-final class Password extends ValueObject {
+final class LeadSource extends ValueObject {
   private $value;
 
-  public function __construct(string $name) {
-    $this->value = $name;
+  public function __construct(string $leadSource) {
+    $this->value = $leadSource;
   }
 
-  public function value(): string {
+  public function value() {
     return $this->value;
   }
 

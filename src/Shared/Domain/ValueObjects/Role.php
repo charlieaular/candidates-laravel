@@ -1,6 +1,5 @@
 <?php
 
-namespace App\Types;
 namespace Src\Shared\Domain\ValueObjects;
 
 enum Role: string {

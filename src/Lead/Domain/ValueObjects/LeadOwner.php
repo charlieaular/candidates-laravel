@@ -4,14 +4,14 @@ namespace Src\Lead\Domain\ValueObjects;
 
 use Src\Shared\Domain\ValueObjects\ValueObject;
 
-final class LeadId extends ValueObject {
+final class LeadOwner extends ValueObject {
   private $value;
 
-  public function __construct(int $leadId) {
-    $this->value = $leadId;
+  public function __construct(int $leadOwner) {
+    $this->value = $leadOwner;
   }
 
-  public function value(): int {
+  public function value() {
     return $this->value;
   }
 
@@ -19,7 +19,7 @@ final class LeadId extends ValueObject {
     return $this->value;
   }
 
-  public function jsonSerialize(): string {
+  public function jsonSerialize() {
     return $this->value;
   }
 }
