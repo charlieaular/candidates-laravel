@@ -4,8 +4,8 @@
 namespace App\Http\Controllers\Lead;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateLeadRequest;
 use App\Responses\SuccessResponse;
-use Illuminate\Http\Request;
 use Src\Lead\Infrastructure\Controllers\CreateLeadController as ControllersCreateLeadController;
 
 class CreateLeadController extends Controller {
@@ -16,11 +16,12 @@ class CreateLeadController extends Controller {
     $this->createLeadController = $createLeadController;
   }
 
-  public function __invoke(Request $request) {
+  public function __invoke(CreateLeadRequest $request) {
     $name = $request->input("name");
     $source = $request->input("source");
     $owner = $request->input("owner");
     $createdBy = auth()->user()->id;
+
     $data = $this->createLeadController->__invoke($name, $source, (int) $owner, $createdBy);
     return new SuccessResponse($data);
   }
