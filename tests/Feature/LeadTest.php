@@ -35,7 +35,7 @@ class LeadTest extends TestCase {
 
     $firstUser = $users->first();
 
-    $this->actingAs($firstUser);
+    $this->actingAsUser($firstUser);
 
     $response = $this->getJson($this->leadApi);
 
@@ -69,7 +69,7 @@ class LeadTest extends TestCase {
 
     $firstUser = $users->first();
 
-    $this->actingAs($firstUser);
+    $this->actingAsUser($firstUser);
 
     $response = $this->getJson($this->leadApi);
 
@@ -131,7 +131,7 @@ class LeadTest extends TestCase {
 
     $randomUser = User::factory()->create();
 
-    $this->actingAs($user);
+    $this->actingAsUser($user);
 
     $body = [
       "name" => "TestName",
@@ -166,7 +166,7 @@ class LeadTest extends TestCase {
 
     $randomUser = User::factory()->create();
 
-    $this->actingAs($user);
+    $this->actingAsUser($user);
 
     $body = [
       "source" => "TestSource",
@@ -192,7 +192,7 @@ class LeadTest extends TestCase {
 
     $randomUser = User::factory()->create();
 
-    $this->actingAs($user);
+    $this->actingAsUser($user);
 
     $body = [
       "name" => "TestName",

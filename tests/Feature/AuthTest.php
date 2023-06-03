@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthTest extends TestCase {
 
@@ -88,6 +89,64 @@ class AuthTest extends TestCase {
         "meta" => [
           "success" => false,
           "errors" => ["Password incorrect for user: {$user->username}"]
+        ],
+      ]);
+  }
+
+  public function testShouldThrowErrorWhenJWTTokenIsInvalid() {
+
+    $user = User::factory()->create();
+
+    $this->actingAsUser($user);
+
+    $this->withHeader('Authorization', "Bearer bad-token");
+
+    $response = $this->getJson("/api/lead");
+
+    // $response->dd();
+
+    $response
+      ->assertStatus(401)
+      ->assertExactJson([
+        "meta" => [
+          "success" => false,
+          "errors" => ["Token invalid"]
+        ],
+      ]);
+  }
+
+  public function testShouldThrowErrorWhenJWTTokenIsExpired() {
+
+    $user = User::factory()->create();
+
+    $token = JWTAuth::customClaims(['exp' => now()->addSeconds(1)->timestamp])->fromUser($user);
+    $this->withHeader('Authorization', "Bearer {$token}");
+    $this->actingAs($user);
+
+    sleep(2);
+
+    $response = $this->getJson("/api/lead");
+
+    $response
+      ->assertStatus(401)
+      ->assertExactJson([
+        "meta" => [
+          "success" => false,
+          "errors" => ["Token expired"]
+        ],
+      ]);
+  }
+
+  public function testShouldThrowErrorWhenJWTTokenIsMissing() {
+
+    $response = $this->getJson("/api/lead");
+
+    $response
+      ->assertStatus(401)
+      ->assertExactJson([
+        "meta" => [
+          "success" => false,
+          "errors" => ["Authorization Token not found"]
         ],
       ]);
   }

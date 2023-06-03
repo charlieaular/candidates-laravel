@@ -8,7 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 abstract class TestCase extends BaseTestCase {
     use CreatesApplication;
 
-    public function actingAs($user, $driver = null) {
+    public function actingAsUser($user, $driver = null) {
         $token = JWTAuth::fromUser($user);
         $this->withHeader('Authorization', "Bearer {$token}");
         parent::actingAs($user);
